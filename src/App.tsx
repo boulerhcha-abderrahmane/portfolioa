@@ -296,11 +296,10 @@ function App() {
         </div>
       </section>
 
-      {/* Section Compétences avec animations */}
+      {/* Section Compétences */}
       <section id="skills" className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
             Compétences
           </h2>
           <div className="max-w-3xl mx-auto grid gap-8">
