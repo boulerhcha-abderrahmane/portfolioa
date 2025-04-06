@@ -234,13 +234,13 @@ function App() {
       {/* Navigation fixe avec effet de flou */}
       <nav className={`fixed w-full top-0 z-50 ${darkMode ? 'bg-gray-900/90' : 'bg-white/90'} backdrop-blur-sm shadow-sm`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">BA.</a>
+          <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">BA.</a>
           <div className="flex items-center gap-6">
-            <a href="#about" className={`hover:text-blue-600 transition-colors ${activeSection === 'about' ? 'text-blue-600' : ''}`}>À propos</a>
-            <a href="#skills" className={`hover:text-blue-600 transition-colors ${activeSection === 'skills' ? 'text-blue-600' : ''}`}>Compétences</a>
-            <a href="#projects" className={`hover:text-blue-600 transition-colors ${activeSection === 'projects' ? 'text-blue-600' : ''}`}>Projets</a>
-            <a href="#education" className={`hover:text-blue-600 transition-colors ${activeSection === 'education' ? 'text-blue-600' : ''}`}>Formation</a>
-            <a href="#contact" className={`hover:text-blue-600 transition-colors ${activeSection === 'contact' ? 'text-blue-600' : ''}`}>Contact</a>
+            <a href="#about" className={`hover:text-blue-500 transition-colors ${activeSection === 'about' ? 'text-blue-500' : ''}`}>À propos</a>
+            <a href="#skills" className={`hover:text-blue-500 transition-colors ${activeSection === 'skills' ? 'text-blue-500' : ''}`}>Compétences</a>
+            <a href="#projects" className={`hover:text-blue-500 transition-colors ${activeSection === 'projects' ? 'text-blue-500' : ''}`}>Projets</a>
+            <a href="#education" className={`hover:text-blue-500 transition-colors ${activeSection === 'education' ? 'text-blue-500' : ''}`}>Formation</a>
+            <a href="#contact" className={`hover:text-blue-500 transition-colors ${activeSection === 'contact' ? 'text-blue-500' : ''}`}>Contact</a>
             <button
               onClick={() => setDarkMode(!darkMode)}
               className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} hover:scale-110 transition-transform`}
@@ -253,21 +253,21 @@ function App() {
 
       {/* Hero Section avec animation de gradient */}
       <section id="home" className="min-h-screen pt-20 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 animate-gradient"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-blue-600/10 animate-gradient"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="mb-8 animate-float">
             <div className="relative inline-block">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
               <img
                 src="./profile.jpg"
                 alt="Boulerhcha Abderrahmane"
                 className="w-48 h-48 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform relative z-10 object-cover"
               />
             </div>
-            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
               Boulerhcha Abderrahmane
             </h1>
-            <p className="text-xl mb-4 text-blue-600">Développeur Full Stack</p>
+            <p className="text-xl mb-4 text-blue-500">Développeur Full Stack</p>
             <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
               Passionné par la création d'applications web modernes et innovantes, 
               spécialisé dans les technologies React, Node.js et TypeScript.
@@ -275,19 +275,19 @@ function App() {
             <div className="flex justify-center gap-4">
               <a 
                 href="#" 
-                className="p-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full hover:scale-110 transform duration-200 shadow-lg"
+                className="p-3 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full hover:scale-110 transform duration-200 shadow-lg"
               >
                 <Linkedin className="w-6 h-6 text-white" />
               </a>
               <a 
                 href="#" 
-                className="p-3 bg-gradient-to-r from-gray-800 to-black rounded-full hover:scale-110 transform duration-200 shadow-lg"
+                className="p-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full hover:scale-110 transform duration-200 shadow-lg"
               >
                 <Github className="w-6 h-6 text-white" />
               </a>
               <a 
                 href="#" 
-                className="p-3 bg-gradient-to-r from-red-500 to-red-700 rounded-full hover:scale-110 transform duration-200 shadow-lg"
+                className="p-3 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full hover:scale-110 transform duration-200 shadow-lg"
               >
                 <FileText className="w-6 h-6 text-white" />
               </a>
@@ -299,6 +299,7 @@ function App() {
       {/* Section Compétences avec animations */}
       <section id="skills" className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
           <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
             Compétences
           </h2>
