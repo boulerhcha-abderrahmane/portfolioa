@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, FileText, Moon, Sun, Send, CheckCircle, ArrowLeft, ExternalLink, MessageSquare, Trash2, Clock } from 'lucide-react';
+import { Github, Linkedin, FileText, Moon, Sun, Send, CheckCircle, ArrowLeft } from 'lucide-react';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -259,9 +259,9 @@ function App() {
             <div className="relative inline-block">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
               <img
-                src="profile.jpg"
-                alt="Profile"
-                className="w-48 h-48 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform relative z-10"
+                src="./profile.jpg"
+                alt="Boulerhcha Abderrahmane"
+                className="w-48 h-48 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform relative z-10 object-cover"
               />
             </div>
             <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
