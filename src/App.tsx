@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, FileText, Moon, Sun, Send, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Github, Linkedin, FileText, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2 } from 'lucide-react';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -118,6 +118,11 @@ function App() {
     };
     setMessages(prev => [...prev, newMessage]);
     setFormSubmitted(true);
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -128,101 +133,74 @@ function App() {
     }));
   };
 
-  const resetForm = () => {
-    setFormSubmitted(false);
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
-  };
-
   const deleteMessage = (id: string) => {
     setMessages(prev => prev.filter(message => message.id !== id));
   };
 
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(date);
-  };
-
-  // Activer la page admin avec Ctrl+Shift+A
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
         setShowAdmin(prev => !prev);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
   }, []);
 
   if (showAdmin) {
     return (
-      <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+      <div className={`fixed inset-0 z-50 ${darkMode ? 'bg-gray-900/95' : 'bg-white/95'} backdrop-blur-sm overflow-y-auto`}>
         <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-between items-center mb-8">
-            <div className="flex items-center gap-3">
-              <MessageSquare className="w-6 h-6 text-blue-600" />
-              <h1 className="text-2xl font-bold">Messages ({messages.length})</h1>
-            </div>
-            <div className="flex items-center gap-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex justify-between items-center mb-8">
+              <div className="flex items-center gap-3">
+                <MessageSquare className="w-6 h-6 text-blue-600" />
+                <h1 className="text-2xl font-bold">Messages ({messages.length})</h1>
+              </div>
               <button
                 onClick={() => setShowAdmin(false)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all-smooth"
+                className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors"
               >
-                <ArrowLeft className="w-4 h-4" />
-                Retour au site
-              </button>
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} hover:scale-110 transition-transform`}
-              >
-                {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                <ArrowLeft className="w-6 h-6" />
               </button>
             </div>
-          </div>
 
-          <div className="grid gap-4">
-            {messages.length === 0 ? (
-              <div className={`p-8 rounded-lg text-center ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-                <MessageSquare className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                <p className="text-lg">Aucun message pour le moment</p>
-              </div>
-            ) : (
-              messages.map(message => (
-                <div
-                  key={message.id}
-                  className={`p-6 rounded-lg shadow-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} hover-scale`}
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h3 className="text-xl font-semibold mb-1">{message.name}</h3>
-                      <p className="text-blue-600">{message.email}</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-2 text-gray-500">
-                        <Clock className="w-4 h-4" />
-                        <span className="text-sm">{formatDate(message.date)}</span>
-                      </div>
-                      <button
-                        onClick={() => deleteMessage(message.id)}
-                        className="p-2 text-red-500 hover:bg-red-100 rounded-full transition-all-smooth"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
-                  <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{message.message}</p>
+            <div className="space-y-4">
+              {messages.length === 0 ? (
+                <div className={`p-8 rounded-lg text-center ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
+                  <MessageSquare className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+                  <p className="text-lg">Aucun message pour le moment</p>
                 </div>
-              ))
-            )}
+              ) : (
+                messages.map(message => (
+                  <div
+                    key={message.id}
+                    className={`p-6 rounded-lg shadow-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} hover:scale-[1.02] transition-transform`}
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-xl font-semibold mb-1">{message.name}</h3>
+                        <p className="text-blue-600">{message.email}</p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 text-gray-500">
+                          <Clock className="w-4 h-4" />
+                          <span className="text-sm">{new Date(message.date).toLocaleString()}</span>
+                        </div>
+                        <button
+                          onClick={() => deleteMessage(message.id)}
+                          className="p-2 text-red-500 hover:bg-red-100 rounded-full transition-all"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
+                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{message.message}</p>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -419,6 +397,8 @@ function App() {
                 <input
                   type="text"
                   name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
                   placeholder="Votre nom"
                   required
                   className={`w-full px-4 py-3 rounded-lg ${
@@ -432,6 +412,8 @@ function App() {
                 <input
                   type="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   placeholder="Votre email"
                   required
                   className={`w-full px-4 py-3 rounded-lg ${
@@ -444,6 +426,8 @@ function App() {
               <div className="mb-6">
                 <textarea
                   name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   placeholder="Votre message"
                   required
                   rows={5}
