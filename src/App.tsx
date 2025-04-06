@@ -59,33 +59,36 @@ function App() {
   }, [showAdmin]);
 
   const skills = [
-    { name: 'HTML5', level: 90 },
-    { name: 'CSS3', level: 85 },
-    { name: 'JavaScript', level: 80 },
-    { name: 'React', level: 75 },
-    { name: 'PHP', level: 70 },
-    { name: 'MySQL', level: 65 },
+    { name: 'React.js', level: 90, color: '#61DAFB' },
+    { name: 'TypeScript', level: 85, color: '#3178C6' },
+    { name: 'Node.js', level: 80, color: '#339933' },
+    { name: 'Next.js', level: 85, color: '#000000' },
+    { name: 'Tailwind CSS', level: 90, color: '#38B2AC' },
+    { name: 'MongoDB', level: 75, color: '#47A248' },
   ];
 
   const projects = [
     {
       title: 'E-commerce Platform',
-      description: 'Une plateforme e-commerce responsive avec panier d\'achat',
+      description: 'Une plateforme e-commerce moderne avec panier d\'achat et paiement intégré',
       image: 'https://images.unsplash.com/photo-1661956602116-aa6865609028?auto=format&fit=crop&q=80&w=800',
+      tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
       github: '#',
       demo: '#'
     },
     {
-      title: 'Task Manager',
-      description: 'Application de gestion de tâches avec React',
+      title: 'Task Manager Pro',
+      description: 'Application de gestion de tâches avec fonctionnalités avancées',
       image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=800',
+      tech: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL'],
       github: '#',
       demo: '#'
     },
     {
       title: 'Blog Personnel',
-      description: 'Blog moderne avec système de gestion de contenu',
+      description: 'Blog moderne avec système de gestion de contenu personnalisé',
       image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=800',
+      tech: ['Next.js', 'MDX', 'Tailwind CSS', 'Vercel'],
       github: '#',
       demo: '#'
     }
@@ -95,12 +98,14 @@ function App() {
     {
       degree: 'Bac+2 Développement Digital',
       school: 'OFPPT',
-      period: '2023 - Present'
+      period: '2023 - Present',
+      description: 'Formation approfondie en développement web et mobile, avec focus sur les technologies modernes'
     },
     {
       degree: 'Baccalauréat Sciences',
       school: 'Lycée Mohammed V',
-      period: '2022'
+      period: '2022',
+      description: 'Formation scientifique avec excellence en mathématiques et physique'
     }
   ];
 
@@ -226,12 +231,13 @@ function App() {
 
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
-      {/* Navigation fixe */}
+      {/* Navigation fixe avec effet de flou */}
       <nav className={`fixed w-full top-0 z-50 ${darkMode ? 'bg-gray-900/90' : 'bg-white/90'} backdrop-blur-sm shadow-sm`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="#" className="text-xl font-bold">MA.</a>
+          <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">BA.</a>
           <div className="flex items-center gap-6">
             <a href="#about" className={`hover:text-blue-600 transition-colors ${activeSection === 'about' ? 'text-blue-600' : ''}`}>À propos</a>
+            <a href="#skills" className={`hover:text-blue-600 transition-colors ${activeSection === 'skills' ? 'text-blue-600' : ''}`}>Compétences</a>
             <a href="#projects" className={`hover:text-blue-600 transition-colors ${activeSection === 'projects' ? 'text-blue-600' : ''}`}>Projets</a>
             <a href="#education" className={`hover:text-blue-600 transition-colors ${activeSection === 'education' ? 'text-blue-600' : ''}`}>Formation</a>
             <a href="#contact" className={`hover:text-blue-600 transition-colors ${activeSection === 'contact' ? 'text-blue-600' : ''}`}>Contact</a>
@@ -245,37 +251,43 @@ function App() {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section avec animation de gradient */}
       <section id="home" className="min-h-screen pt-20 flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 gradient-bg opacity-10"></div>
-        <div className="container mx-auto px-4 text-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 animate-gradient"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
           <div className="mb-8 animate-float">
-            <img
-              src="profile.jpg"
-              alt="Profile"
-              className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform"
-            />
-            <h1 className="text-5xl font-bold mb-4">Boulerhcha Abderrahmane</h1>
-            <p className="text-xl mb-4 text-blue-600">Étudiant en Développement Digital</p>
-            <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Passionné par la création d'expériences web innovantes et la résolution de problèmes complexes
+            <div className="relative inline-block">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
+              <img
+                src="profile.jpg"
+                alt="Profile"
+                className="w-48 h-48 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform relative z-10"
+              />
+            </div>
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              Boulerhcha Abderrahmane
+            </h1>
+            <p className="text-xl mb-4 text-blue-600">Développeur Full Stack</p>
+            <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+              Passionné par la création d'applications web modernes et innovantes, 
+              spécialisé dans les technologies React, Node.js et TypeScript.
             </p>
             <div className="flex justify-center gap-4">
               <a 
                 href="#" 
-                className="p-3 bg-blue-600 rounded-full hover:bg-blue-700 transition-colors hover:scale-110 transform duration-200"
+                className="p-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full hover:scale-110 transform duration-200 shadow-lg"
               >
                 <Linkedin className="w-6 h-6 text-white" />
               </a>
               <a 
                 href="#" 
-                className="p-3 bg-gray-800 rounded-full hover:bg-gray-900 transition-colors hover:scale-110 transform duration-200"
+                className="p-3 bg-gradient-to-r from-gray-800 to-black rounded-full hover:scale-110 transform duration-200 shadow-lg"
               >
                 <Github className="w-6 h-6 text-white" />
               </a>
               <a 
                 href="#" 
-                className="p-3 bg-red-600 rounded-full hover:bg-red-700 transition-colors hover:scale-110 transform duration-200"
+                className="p-3 bg-gradient-to-r from-red-500 to-red-700 rounded-full hover:scale-110 transform duration-200 shadow-lg"
               >
                 <FileText className="w-6 h-6 text-white" />
               </a>
@@ -284,67 +296,74 @@ function App() {
         </div>
       </section>
 
-      {/* À propos */}
-      <section id="about" className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+      {/* Section Compétences avec animations */}
+      <section id="skills" className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">À Propos</h2>
-          <div className="max-w-3xl mx-auto">
-            <p className="text-lg mb-12 text-center leading-relaxed">
-              Étudiant passionné en deuxième année de développement digital, je combine créativité et expertise technique
-              pour créer des solutions web innovantes. Mon objectif est de devenir un développeur full-stack capable de
-              transformer des idées en applications web performantes et élégantes.
-            </p>
-            <div className="grid gap-8">
-              {skills.map((skill) => (
-                <div key={skill.name} className="hover-scale">
-                  <div className="flex justify-between mb-2">
-                    <span className="font-medium">{skill.name}</span>
-                    <span>{skill.level}%</span>
-                  </div>
-                  <div className={`h-2 rounded-full ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                    <div
-                      className="h-full rounded-full bg-blue-600 skill-bar"
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            Compétences
+          </h2>
+          <div className="max-w-3xl mx-auto grid gap-8">
+            {skills.map((skill) => (
+              <div key={skill.name} className="group hover:scale-105 transition-all duration-300">
+                <div className="flex justify-between mb-2">
+                  <span className="font-medium">{skill.name}</span>
+                  <span>{skill.level}%</span>
                 </div>
-              ))}
-            </div>
+                <div className={`h-3 rounded-full ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} overflow-hidden`}>
+                  <div
+                    className="h-full rounded-full transition-all duration-500 ease-out group-hover:shadow-lg"
+                    style={{ 
+                      width: `${skill.level}%`,
+                      backgroundColor: skill.color,
+                      boxShadow: `0 0 10px ${skill.color}40`
+                    }}
+                  ></div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Projets */}
+      {/* Section Projets avec effet de carte */}
       <section id="projects" className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Mes Projets</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            Mes Projets
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <div
                 key={index}
-                className={`rounded-lg overflow-hidden shadow-lg hover-scale ${
+                className={`rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${
                   darkMode ? 'bg-gray-800' : 'bg-white'
                 }`}
               >
-                <div className="relative group">
-                  <img src={project.image} alt={project.title} className="w-full h-48 object-cover" />
-                  <div className="absolute inset-0 bg-blue-600/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <ExternalLink className="w-8 h-8 text-white" />
+                <div className="relative group h-48">
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-start p-4">
+                    <div className="flex gap-2">
+                      {project.tech.map((tech, i) => (
+                        <span key={i} className="px-2 py-1 bg-white/20 rounded-full text-xs text-white backdrop-blur-sm">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="mb-4">{project.description}</p>
+                  <p className="mb-4 text-gray-600 dark:text-gray-300">{project.description}</p>
                   <div className="flex gap-4">
                     <a
                       href={project.demo}
-                      className="flex-1 text-center py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition-all-smooth"
+                      className="flex-1 text-center py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:shadow-lg transition-all duration-300"
                     >
                       Voir projet
                     </a>
                     <a
                       href={project.github}
-                      className="flex-1 text-center py-2 rounded bg-gray-800 text-white hover:bg-gray-900 transition-all-smooth"
+                      className="flex-1 text-center py-2 rounded-lg bg-gradient-to-r from-gray-800 to-black text-white hover:shadow-lg transition-all duration-300"
                     >
                       GitHub
                     </a>
@@ -356,103 +375,107 @@ function App() {
         </div>
       </section>
 
-      {/* Formation */}
+      {/* Section Formation avec timeline */}
       <section id="education" className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Formation</h2>
-          <div className="max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            Formation
+          </h2>
+          <div className="max-w-3xl mx-auto">
             {education.map((edu, index) => (
               <div
                 key={index}
-                className={`relative pl-8 pb-8 border-l-2 hover-scale ${
+                className={`relative pl-8 pb-8 border-l-2 hover:scale-102 transition-transform ${
                   darkMode ? 'border-gray-700' : 'border-gray-200'
                 } ${index === education.length - 1 ? 'border-l-0' : ''}`}
               >
                 <div
                   className={`absolute left-[-9px] top-0 w-4 h-4 rounded-full ${
-                    darkMode ? 'bg-gray-700' : 'bg-gray-200'
-                  }`}
+                    darkMode ? 'bg-blue-500' : 'bg-blue-600'
+                  } shadow-lg`}
                 ></div>
-                <h3 className="text-xl font-bold mb-1">{edu.degree}</h3>
-                <p className="text-gray-500 dark:text-gray-400">{edu.school}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{edu.period}</p>
+                <div className={`p-6 rounded-lg ${darkMode ? 'bg-gray-900' : 'bg-gray-50'} shadow-lg`}>
+                  <h3 className="text-xl font-bold mb-1">{edu.degree}</h3>
+                  <p className="text-blue-600">{edu.school}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{edu.period}</p>
+                  <p className="text-gray-600 dark:text-gray-300">{edu.description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Contact</h2>
+      {/* Section Contact avec effet de carte en verre */}
+      <section id="contact" className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            Contact
+          </h2>
           {!formSubmitted ? (
             <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
               <div className="mb-6">
                 <input
                   type="text"
                   name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
                   placeholder="Votre nom"
                   required
                   className={`w-full px-4 py-3 rounded-lg ${
                     darkMode
-                      ? 'bg-gray-800 border-gray-700'
-                      : 'bg-white border-gray-300'
-                  } border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all-smooth hover:border-blue-400`}
+                      ? 'bg-gray-800/50 border-gray-700'
+                      : 'bg-white/50 border-gray-300'
+                  } border backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 hover:border-blue-400`}
                 />
               </div>
               <div className="mb-6">
                 <input
                   type="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
                   placeholder="Votre email"
                   required
                   className={`w-full px-4 py-3 rounded-lg ${
                     darkMode
-                      ? 'bg-gray-800 border-gray-700'
-                      : 'bg-white border-gray-300'
-                  } border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all-smooth hover:border-blue-400`}
+                      ? 'bg-gray-800/50 border-gray-700'
+                      : 'bg-white/50 border-gray-300'
+                  } border backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 hover:border-blue-400`}
                 />
               </div>
               <div className="mb-6">
                 <textarea
                   name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
                   placeholder="Votre message"
                   required
                   rows={5}
                   className={`w-full px-4 py-3 rounded-lg ${
                     darkMode
-                      ? 'bg-gray-800 border-gray-700'
-                      : 'bg-white border-gray-300'
-                  } border focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all-smooth hover:border-blue-400`}
+                      ? 'bg-gray-800/50 border-gray-700'
+                      : 'bg-white/50 border-gray-300'
+                  } border backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 hover:border-blue-400`}
                 ></textarea>
               </div>
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all-smooth hover:scale-102 transform flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:shadow-lg transition-all duration-300 transform hover:scale-102 flex items-center justify-center gap-2"
               >
                 <Send className="w-5 h-5" />
                 Envoyer
               </button>
             </form>
           ) : (
-            <div className={`max-w-lg mx-auto text-center ${darkMode ? 'bg-gray-800' : 'bg-white'} p-8 rounded-lg shadow-lg animate-float`}>
+            <div className={`max-w-lg mx-auto text-center p-8 rounded-lg backdrop-blur-sm ${darkMode ? 'bg-gray-800/50' : 'bg-white/50'} shadow-lg animate-float`}>
               <div className="flex justify-center mb-6">
-                <CheckCircle className="w-16 h-16 text-green-500" />
+                <div className="p-3 rounded-full bg-green-500/20">
+                  <CheckCircle className="w-16 h-16 text-green-500" />
+                </div>
               </div>
               <h3 className="text-2xl font-bold mb-4">Message Envoyé !</h3>
-              <p className="text-lg mb-8">
-                Merci {formData.name} ! Votre message a été envoyé avec succès. Je vous répondrai dans les plus brefs délais.
+              <p className="text-lg mb-8 text-gray-600 dark:text-gray-300">
+                Merci ! Votre message a été envoyé avec succès. Je vous répondrai dans les plus brefs délais.
               </p>
               <button
-                onClick={resetForm}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all-smooth hover:scale-105 transform"
+                onClick={() => setFormSubmitted(false)}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
               >
                 <ArrowLeft className="w-5 h-5" />
                 Retour au formulaire
@@ -462,12 +485,12 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className={`py-8 ${darkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
+      {/* Footer avec effet de verre */}
+      <footer className={`py-8 backdrop-blur-sm ${darkMode ? 'bg-gray-800/90' : 'bg-white/90'}`}>
         <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2024 Mohammed Alami. Tous droits réservés.</p>
-          <div className="flex justify-center gap-4 mt-4">
-            <a href="#" className="hover:text-blue-600 transition-colors hover:scale-110 transform duration-200">
+          <p className="mb-4">&copy; 2024 Boulerhcha Abderrahmane. Tous droits réservés.</p>
+          <div className="flex justify-center gap-4">
+            <a href="#" className="text-blue-600 hover:text-blue-700 transition-colors hover:scale-110 transform duration-200">
               <Linkedin className="w-5 h-5" />
             </a>
             <a href="#" className="hover:text-gray-900 transition-colors hover:scale-110 transform duration-200">
