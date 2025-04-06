@@ -251,11 +251,11 @@ function App() {
         <div className="container mx-auto px-4 text-center">
           <div className="mb-8 animate-float">
             <img
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200&h=200"
+              src="/profile.jpg"
               alt="Profile"
               className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform"
             />
-            <h1 className="text-5xl font-bold mb-4">Mohammed Alami</h1>
+            <h1 className="text-5xl font-bold mb-4">Boulerhcha Abderrahmane</h1>
             <p className="text-xl mb-4 text-blue-600">Étudiant en Développement Digital</p>
             <p className="text-lg mb-8 max-w-2xl mx-auto">
               Passionné par la création d'expériences web innovantes et la résolution de problèmes complexes
