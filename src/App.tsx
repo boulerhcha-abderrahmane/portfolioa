@@ -251,7 +251,7 @@ function App() {
         <div className="container mx-auto px-4 text-center">
           <div className="mb-8 animate-float">
             <img
-              src="/profile.jpg"
+              src="profile.jpg"
               alt="Profile"
               className="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform"
             />
