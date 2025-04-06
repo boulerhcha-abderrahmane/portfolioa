@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, FileText, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2 } from 'lucide-react';
+import messagesData from './messages.json';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -10,8 +11,8 @@ function App() {
     name: string;
     email: string;
     message: string;
-    date: Date;
-  }[]>([]);
+    date: string;
+  }[]>(messagesData);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -49,7 +50,7 @@ function App() {
           name: `Visiteur ${Math.floor(Math.random() * 100)}`,
           email: `visiteur${Math.floor(Math.random() * 100)}@example.com`,
           message: `Message test ${Math.floor(Math.random() * 100)}`,
-          date: new Date()
+          date: new Date().toISOString()
         };
         setMessages(prev => [...prev, newMessage]);
       }, 30000);
@@ -109,13 +110,15 @@ function App() {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newMessage = {
       id: Math.random().toString(36).substr(2, 9),
       ...formData,
-      date: new Date()
+      date: new Date().toISOString()
     };
+
+    // For GitHub Pages deployment, we'll update the state directly
     setMessages(prev => [...prev, newMessage]);
     setFormSubmitted(true);
     setFormData({
@@ -136,6 +139,11 @@ function App() {
   const deleteMessage = (id: string) => {
     setMessages(prev => prev.filter(message => message.id !== id));
   };
+
+  // Load initial messages
+  useEffect(() => {
+    setMessages(messagesData);
+  }, []);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
