@@ -219,20 +219,34 @@ function App() {
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       {/* Navigation fixe avec effet de flou */}
       <nav className={`fixed w-full top-0 z-50 ${darkMode ? 'bg-gray-900/90' : 'bg-white/90'} backdrop-blur-sm shadow-sm`}>
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">BA.</a>
-          <div className="flex items-center gap-6">
-            <a href="#about" className={`hover:text-blue-500 transition-colors ${activeSection === 'about' ? 'text-blue-500' : ''}`}>À propos</a>
-            <a href="#skills" className={`hover:text-blue-500 transition-colors ${activeSection === 'skills' ? 'text-blue-500' : ''}`}>Compétences</a>
-            <a href="#projects" className={`hover:text-blue-500 transition-colors ${activeSection === 'projects' ? 'text-blue-500' : ''}`}>Projets</a>
-            <a href="#education" className={`hover:text-blue-500 transition-colors ${activeSection === 'education' ? 'text-blue-500' : ''}`}>Formation</a>
-            <a href="#contact" className={`hover:text-blue-500 transition-colors ${activeSection === 'contact' ? 'text-blue-500' : ''}`}>Contact</a>
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} hover:scale-110 transition-transform`}
-            >
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">BA.</a>
+            
+            {/* Menu mobile */}
+            <div className="flex md:hidden items-center gap-4">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} hover:scale-110 transition-transform`}
+              >
+                {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+            </div>
+
+            {/* Menu desktop */}
+            <div className="hidden md:flex items-center gap-6">
+              <a href="#about" className={`hover:text-blue-500 transition-colors ${activeSection === 'about' ? 'text-blue-500' : ''}`}>À propos</a>
+              <a href="#skills" className={`hover:text-blue-500 transition-colors ${activeSection === 'skills' ? 'text-blue-500' : ''}`}>Compétences</a>
+              <a href="#projects" className={`hover:text-blue-500 transition-colors ${activeSection === 'projects' ? 'text-blue-500' : ''}`}>Projets</a>
+              <a href="#education" className={`hover:text-blue-500 transition-colors ${activeSection === 'education' ? 'text-blue-500' : ''}`}>Formation</a>
+              <a href="#contact" className={`hover:text-blue-500 transition-colors ${activeSection === 'contact' ? 'text-blue-500' : ''}`}>Contact</a>
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} hover:scale-110 transition-transform`}
+              >
+                {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </nav>
