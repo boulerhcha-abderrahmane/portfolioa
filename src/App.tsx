@@ -60,12 +60,15 @@ function App() {
   }, [showAdmin]);
 
   const skills = [
-    { name: 'React.js', level: 90, color: '#61DAFB' },
-    { name: 'TypeScript', level: 85, color: '#3178C6' },
+    { name: 'HTML', level: 95, color: '#E34F26' },
+    { name: 'CSS', level: 90, color: '#264DE4' },
+    { name: 'Bootstrap', level: 85, color: '#7952B3' },
+    { name: 'PHP', level: 80, color: '#777BB4' },
+    { name: 'JavaScript', level: 85, color: '#F7DF1E' },
+    { name: 'React', level: 85, color: '#61DAFB' },
+    { name: 'Laravel', level: 80, color: '#FF2D20' },
     { name: 'Node.js', level: 80, color: '#339933' },
-    { name: 'Next.js', level: 85, color: '#000000' },
-    { name: 'Tailwind CSS', level: 90, color: '#38B2AC' },
-    { name: 'MongoDB', level: 75, color: '#47A248' },
+    { name: 'Python', level: 75, color: '#3776AB' }
   ];
 
   const projects = [
@@ -99,14 +102,14 @@ function App() {
     {
       degree: 'Bac+2 Développement Digital',
       school: 'OFPPT',
-      period: '2023 - Present',
-      description: 'Formation approfondie en développement web et mobile, avec focus sur les technologies modernes'
+      period: '2023 - 2025',
+      description: 'Formation en développement web full stack, avec focus sur les technologies modernes et les meilleures pratiques du développement web.'
     },
     {
-      degree: 'Baccalauréat Sciences',
-      school: 'Lycée Mohammed V',
-      period: '2022',
-      description: 'Formation scientifique avec excellence en mathématiques et physique'
+      degree: 'Baccalauréat Sciences Physiques, option (Français)',
+      school: 'Madariss IBN SINA, OUJDA(MAROC)',
+      period: '2022 - 2023',
+      description: 'Formation scientifique avec excellence en sciences physiques et français.'
     }
   ];
 
@@ -218,31 +221,31 @@ function App() {
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       {/* Navigation fixe avec effet de flou */}
-      <nav className={`fixed w-full top-0 z-50 ${darkMode ? 'bg-gray-900/90' : 'bg-white/90'} backdrop-blur-sm shadow-sm`}>
+      <nav className={`fixed w-full top-0 z-50 ${darkMode ? 'bg-gray-900/80' : 'bg-white/80'} backdrop-blur-md shadow-lg transition-all duration-300`}>
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
-            <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">BA.</a>
+            <a href="#" className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300">BA.</a>
             
             {/* Menu mobile */}
             <div className="flex md:hidden items-center gap-4">
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} hover:scale-110 transition-transform`}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800/50' : 'bg-gray-100/50'} hover:scale-110 transition-all duration-300 hover:shadow-lg`}
               >
                 {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
             </div>
 
             {/* Menu desktop */}
-            <div className="hidden md:flex items-center gap-6">
-              <a href="#about" className={`hover:text-blue-500 transition-colors ${activeSection === 'about' ? 'text-blue-500' : ''}`}>À propos</a>
-              <a href="#skills" className={`hover:text-blue-500 transition-colors ${activeSection === 'skills' ? 'text-blue-500' : ''}`}>Compétences</a>
-              <a href="#projects" className={`hover:text-blue-500 transition-colors ${activeSection === 'projects' ? 'text-blue-500' : ''}`}>Projets</a>
-              <a href="#education" className={`hover:text-blue-500 transition-colors ${activeSection === 'education' ? 'text-blue-500' : ''}`}>Formation</a>
-              <a href="#contact" className={`hover:text-blue-500 transition-colors ${activeSection === 'contact' ? 'text-blue-500' : ''}`}>Contact</a>
+            <div className="hidden md:flex items-center gap-8">
+              <a href="#about" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'about' ? 'text-blue-500 font-medium' : ''}`}>À propos</a>
+              <a href="#skills" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'skills' ? 'text-blue-500 font-medium' : ''}`}>Compétences</a>
+              <a href="#projects" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'projects' ? 'text-blue-500 font-medium' : ''}`}>Projets</a>
+              <a href="#education" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'education' ? 'text-blue-500 font-medium' : ''}`}>Formation</a>
+              <a href="#contact" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'contact' ? 'text-blue-500 font-medium' : ''}`}>Contact</a>
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} hover:scale-110 transition-transform`}
+                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800/50' : 'bg-gray-100/50'} hover:scale-110 transition-all duration-300 hover:shadow-lg`}
               >
                 {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
@@ -264,11 +267,11 @@ function App() {
                 className="w-48 h-48 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform relative z-10 object-cover"
               />
             </div>
-            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent animate-gradient px-4 [max-width:360px]:text-3xl">
               Boulerhcha Abderrahmane
             </h1>
             <p className="text-xl mb-4 text-blue-500">Développeur Full Stack</p>
-            <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
+            <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300 px-4">
               Passionné par la création d'applications web modernes et innovantes, 
               spécialisé dans les technologies React, Node.js et TypeScript.
             </p>
@@ -328,7 +331,7 @@ function App() {
       {/* Section Projets avec effet de carte */}
       <section id="projects" className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
             Mes Projets
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -378,7 +381,7 @@ function App() {
       {/* Section Formation avec timeline */}
       <section id="education" className={`py-20 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
             Formation
           </h2>
           <div className="max-w-3xl mx-auto">
@@ -410,7 +413,7 @@ function App() {
       <section id="contact" className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
             Contact
           </h2>
           {!formSubmitted ? (
