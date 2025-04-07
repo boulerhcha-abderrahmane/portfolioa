@@ -238,6 +238,7 @@ function App() {
 
             {/* Menu desktop */}
             <div className="hidden md:flex items-center gap-8">
+              <a href="#home" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'home' ? 'text-blue-500 font-medium' : ''}`}>Accueil</a>
               <a href="#skills" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'skills' ? 'text-blue-500 font-medium' : ''}`}>Compétences</a>
               <a href="#projects" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'projects' ? 'text-blue-500 font-medium' : ''}`}>Projets</a>
               <a href="#education" className={`hover:text-blue-500 transition-all duration-300 ${activeSection === 'education' ? 'text-blue-500 font-medium' : ''}`}>Formation</a>
