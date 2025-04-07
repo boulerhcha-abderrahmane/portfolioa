@@ -267,11 +267,11 @@ function App() {
                 className="w-48 h-48 rounded-full mx-auto mb-6 border-4 border-white shadow-lg hover:scale-105 transition-transform relative z-10 object-cover"
               />
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent animate-gradient px-4">
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent animate-gradient px-4 [max-width:360px]:text-3xl">
               Boulerhcha Abderrahmane
             </h1>
-            <p className="text-lg md:text-xl mb-4 text-blue-500">Développeur Full Stack</p>
-            <p className="text-base md:text-lg mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300 px-4">
+            <p className="text-xl mb-4 text-blue-500">Développeur Full Stack</p>
+            <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300 px-4">
               Passionné par la création d'applications web modernes et innovantes, 
               spécialisé dans les technologies React, Node.js et TypeScript.
             </p>
