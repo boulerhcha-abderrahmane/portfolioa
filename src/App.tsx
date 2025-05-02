@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook, FileDown, Phone } from 'lucide-react';
+import { Github, Linkedin, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook, Phone } from 'lucide-react';
 import messagesData from './messages.json';
 
 function App() {
@@ -61,24 +61,6 @@ function App() {
 
     return () => observer.disconnect();
   }, []);
-
-  // Simuler la réception de messages toutes les 30 secondes
-  useEffect(() => {
-    if (showAdmin) {
-      const interval = setInterval(() => {
-        const newMessage = {
-          id: Math.random().toString(36).substr(2, 9),
-          name: `Visiteur ${Math.floor(Math.random() * 100)}`,
-          email: `visiteur${Math.floor(Math.random() * 100)}@example.com`,
-          message: `Message test ${Math.floor(Math.random() * 100)}`,
-          date: new Date().toISOString()
-        };
-        setMessages(prev => [...prev, newMessage]);
-      }, 30000);
-
-      return () => clearInterval(interval);
-    }
-  }, [showAdmin]);
 
   // Update localStorage and apply dark mode to document when darkMode changes
   useEffect(() => {
