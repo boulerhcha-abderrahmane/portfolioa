@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook } from 'lucide-react';
+import { Github, Linkedin, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook, FileDown, Phone } from 'lucide-react';
 import messagesData from './messages.json';
 
 function App() {
@@ -70,6 +70,17 @@ function App() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+    
+    // Mettre à jour la meta tag theme-color
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement('meta');
+      metaThemeColor.setAttribute('name', 'theme-color');
+      document.head.appendChild(metaThemeColor);
+    }
+    
+    // Couleur en fonction du mode sombre/clair
+    metaThemeColor.setAttribute('content', darkMode ? '#111827' : '#f9fafb');
   }, [darkMode]);
 
   const skills = [
@@ -523,10 +534,7 @@ function App() {
               <Facebook className="w-5 h-5" />
             </a>
             <a href="https://wa.me/+2120766662217" target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-600 transition-colors hover:scale-110 transform duration-200">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                <path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.2.301-.767.966-.94 1.164-.173.199-.347.223-.646.075-.3-.15-1.267-.465-2.4-1.485-.888-.795-1.485-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.52.146-.174.194-.3.297-.496.1-.198.05-.371-.025-.52-.075-.149-.672-1.625-.922-2.227-.24-.6-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.074-.797.372-.273.3-1.045 1.023-1.045 2.492 0 1.47 1.07 2.89 1.22 3.09.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M13.792 18.906l.006.014c2.075-.138 3.817-.985 5.03-2.35 1.221-1.376 1.834-3.115 1.742-4.887-.138-2.681-1.739-5.062-4.126-6.14-.087-.04-.179-.076-.272-.11-2.143-.848-4.542-.624-6.524.665-.17.11-.11.226-.226.35-2.711 2.101-3.538 5.834-1.898 8.857 1.255 2.332 3.775 3.651 6.404 3.439l.133-.13.133.133 3.5.35-.35-3.5-.133-.133z" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Phone className="w-5 h-5" />
             </a>
           </div>
         </div>
