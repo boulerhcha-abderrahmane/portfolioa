@@ -1,25 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// Récupérer la configuration depuis localStorage ou utiliser la configuration par défaut
-let firebaseConfig;
-const savedConfig = localStorage.getItem('firebaseConfig');
+// Configuration Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBjyJ9_e6LBoeREi5H8L7yWYl_b5kMfbzQ",
+  authDomain: "portfolio-f07fc.firebaseapp.com",
+  projectId: "portfolio-f07fc",
+  storageBucket: "portfolio-f07fc.firebasestorage.app",
+  messagingSenderId: "763436687477",
+  appId: "1:763436687477:web:f185fadfdc5f1eb6aad83c",
+  measurementId: "G-PW1Y8DJCSS"
+};
 
-if (savedConfig) {
-  try {
-    firebaseConfig = JSON.parse(savedConfig);
-  } catch (e) {
-    console.error("Erreur lors du parsing de la configuration Firebase:", e);
-    // Si la configuration est invalide, ne pas initialiser Firebase
-    throw new Error("Configuration Firebase invalide");
-  }
-} else {
-  // Pas de configuration trouvée, ne pas initialiser Firebase
-  console.log("Aucune configuration Firebase trouvée dans localStorage");
-  throw new Error("Aucune configuration Firebase trouvée");
-}
-
-// Initialiser Firebase seulement si la configuration est disponible
+// Initialiser Firebase
 const app = initializeApp(firebaseConfig);
 
 // Initialiser Firestore

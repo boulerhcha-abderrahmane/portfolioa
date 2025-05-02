@@ -2,84 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook, Phone } from 'lucide-react';
 import { db } from './firebase';
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
-import { getApp, getApps } from 'firebase/app';
-
-// Vérifier si Firebase est configuré
-const isFirebaseConfigured = () => {
-  try {
-    return getApps().length > 0;
-  } catch (error) {
-    return false;
-  }
-};
-
-// Composant pour configurer Firebase
-const ConfigSetup = ({ onComplete }: { onComplete: (config: any) => void }) => {
-  const [config, setConfig] = useState({
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setConfig(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Vérifier si tous les champs sont remplis
-    const isComplete = Object.values(config).every(value => value.trim() !== "");
-    
-    if (isComplete) {
-      onComplete(config);
-    } else {
-      alert("Veuillez remplir tous les champs");
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900/90 z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-        <h2 className="text-xl font-bold mb-4">Configuration Firebase</h2>
-        <p className="mb-4 text-gray-600">
-          Pour stocker les messages dans une base de données, veuillez entrer les informations de configuration Firebase.
-          Vous pouvez les obtenir en créant un projet sur <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">console.firebase.google.com</a>
-        </p>
-        
-        <form onSubmit={handleSubmit}>
-          {Object.entries(config).map(([key, value]) => (
-            <div key={key} className="mb-3">
-              <label className="block text-sm font-medium text-gray-700 mb-1">{key}</label>
-              <input
-                type="text"
-                name={key}
-                value={value}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
-                placeholder={`Entrez votre ${key}`}
-              />
-            </div>
-          ))}
-          
-          <button
-            type="submit"
-            className="w-full py-2 mt-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-          >
-            Sauvegarder la configuration
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-};
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -102,27 +24,9 @@ function App() {
   });
   const [activeSection, setActiveSection] = useState('');
   const [loading, setLoading] = useState(false);
-  const [firebaseConfigured, setFirebaseConfigured] = useState(isFirebaseConfigured());
-  const [showConfig, setShowConfig] = useState(!isFirebaseConfigured());
-
-  // Vérifier la configuration Firebase au chargement
-  useEffect(() => {
-    setFirebaseConfigured(isFirebaseConfigured());
-    setShowConfig(!isFirebaseConfigured());
-  }, []);
-
-  // Handler pour enregistrer la configuration Firebase
-  const handleSaveConfig = (config: any) => {
-    // Enregistrer la config dans localStorage
-    localStorage.setItem('firebaseConfig', JSON.stringify(config));
-    // Recharger la page pour initialiser Firebase avec la nouvelle config
-    window.location.reload();
-  };
 
   // Charger les messages depuis Firestore au démarrage
   useEffect(() => {
-    if (!firebaseConfigured) return;
-
     const fetchMessages = async () => {
       try {
         setLoading(true);
@@ -148,7 +52,7 @@ function App() {
     };
 
     fetchMessages();
-  }, [firebaseConfigured]);
+  }, []);
 
   // Sauvegarder les messages dans localStorage quand ils changent
   useEffect(() => {
@@ -415,11 +319,6 @@ function App() {
         </div>
       </div>
     );
-  }
-
-  // Afficher le composant de configuration si Firebase n'est pas configuré
-  if (showConfig) {
-    return <ConfigSetup onComplete={handleSaveConfig} />;
   }
 
   return (
