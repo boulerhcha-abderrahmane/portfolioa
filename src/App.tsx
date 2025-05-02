@@ -29,8 +29,8 @@ function App() {
     if (savedMessages) {
       setMessages(JSON.parse(savedMessages));
     } else {
-      // Si pas de messages sauvegardés, utiliser les données par défaut
-      setMessages(messagesData);
+      // Si pas de messages sauvegardés, utiliser un tableau vide
+      setMessages([]);
     }
   }, []);
 
@@ -189,12 +189,27 @@ function App() {
                 <MessageSquare className="w-6 h-6 text-blue-600" />
                 <h1 className="text-2xl font-bold">Messages ({messages.length})</h1>
               </div>
-              <button
-                onClick={() => setShowAdmin(false)}
-                className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors"
-              >
-                <ArrowLeft className="w-6 h-6" />
-              </button>
+              <div className="flex items-center gap-3">
+                {messages.length > 0 && (
+                  <button
+                    onClick={() => {
+                      if (window.confirm('Êtes-vous sûr de vouloir supprimer tous les messages?')) {
+                        setMessages([]);
+                        localStorage.removeItem('contactMessages');
+                      }
+                    }}
+                    className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4 inline mr-1" /> Tout supprimer
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowAdmin(false)}
+                  className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors"
+                >
+                  <ArrowLeft className="w-6 h-6" />
+                </button>
+              </div>
             </div>
 
             <div className="space-y-4">
