@@ -15,13 +15,31 @@ function App() {
     email: string;
     message: string;
     date: string;
-  }[]>(messagesData);
+  }[]>([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
   const [activeSection, setActiveSection] = useState('');
+
+  // Charger les messages depuis localStorage au démarrage
+  useEffect(() => {
+    const savedMessages = localStorage.getItem('contactMessages');
+    if (savedMessages) {
+      setMessages(JSON.parse(savedMessages));
+    } else {
+      // Si pas de messages sauvegardés, utiliser les données par défaut
+      setMessages(messagesData);
+    }
+  }, []);
+
+  // Sauvegarder les messages dans localStorage quand ils changent
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem('contactMessages', JSON.stringify(messages));
+    }
+  }, [messages]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -145,7 +163,7 @@ function App() {
       date: new Date().toISOString()
     };
 
-    // For GitHub Pages deployment, we'll update the state directly
+    // Mettre à jour l'état et enregistrer dans localStorage
     setMessages(prev => [...prev, newMessage]);
     setFormSubmitted(true);
     setFormData({
@@ -165,12 +183,8 @@ function App() {
 
   const deleteMessage = (id: string) => {
     setMessages(prev => prev.filter(message => message.id !== id));
+    // localStorage sera mis à jour automatiquement grâce à l'effet
   };
-
-  // Load initial messages
-  useEffect(() => {
-    setMessages(messagesData);
-  }, []);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
