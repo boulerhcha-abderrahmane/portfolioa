@@ -1,6 +1,85 @@
 import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook, Phone } from 'lucide-react';
-import messagesData from './messages.json';
+import { db } from './firebase';
+import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { getApp, getApps } from 'firebase/app';
+
+// Vérifier si Firebase est configuré
+const isFirebaseConfigured = () => {
+  try {
+    return getApps().length > 0;
+  } catch (error) {
+    return false;
+  }
+};
+
+// Composant pour configurer Firebase
+const ConfigSetup = ({ onComplete }: { onComplete: (config: any) => void }) => {
+  const [config, setConfig] = useState({
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setConfig(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Vérifier si tous les champs sont remplis
+    const isComplete = Object.values(config).every(value => value.trim() !== "");
+    
+    if (isComplete) {
+      onComplete(config);
+    } else {
+      alert("Veuillez remplir tous les champs");
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900/90 z-50">
+      <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <h2 className="text-xl font-bold mb-4">Configuration Firebase</h2>
+        <p className="mb-4 text-gray-600">
+          Pour stocker les messages dans une base de données, veuillez entrer les informations de configuration Firebase.
+          Vous pouvez les obtenir en créant un projet sur <a href="https://console.firebase.google.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">console.firebase.google.com</a>
+        </p>
+        
+        <form onSubmit={handleSubmit}>
+          {Object.entries(config).map(([key, value]) => (
+            <div key={key} className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">{key}</label>
+              <input
+                type="text"
+                name={key}
+                value={value}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded"
+                placeholder={`Entrez votre ${key}`}
+              />
+            </div>
+          ))}
+          
+          <button
+            type="submit"
+            className="w-full py-2 mt-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            Sauvegarder la configuration
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -22,17 +101,54 @@ function App() {
     message: ''
   });
   const [activeSection, setActiveSection] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [firebaseConfigured, setFirebaseConfigured] = useState(isFirebaseConfigured());
+  const [showConfig, setShowConfig] = useState(!isFirebaseConfigured());
 
-  // Charger les messages depuis localStorage au démarrage
+  // Vérifier la configuration Firebase au chargement
   useEffect(() => {
-    const savedMessages = localStorage.getItem('contactMessages');
-    if (savedMessages) {
-      setMessages(JSON.parse(savedMessages));
-    } else {
-      // Si pas de messages sauvegardés, utiliser un tableau vide
-      setMessages([]);
-    }
+    setFirebaseConfigured(isFirebaseConfigured());
+    setShowConfig(!isFirebaseConfigured());
   }, []);
+
+  // Handler pour enregistrer la configuration Firebase
+  const handleSaveConfig = (config: any) => {
+    // Enregistrer la config dans localStorage
+    localStorage.setItem('firebaseConfig', JSON.stringify(config));
+    // Recharger la page pour initialiser Firebase avec la nouvelle config
+    window.location.reload();
+  };
+
+  // Charger les messages depuis Firestore au démarrage
+  useEffect(() => {
+    if (!firebaseConfigured) return;
+
+    const fetchMessages = async () => {
+      try {
+        setLoading(true);
+        const messagesRef = collection(db, 'messages');
+        const q = query(messagesRef, orderBy('date', 'desc'));
+        const snapshot = await getDocs(q);
+        const messagesList = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as {
+          id: string;
+          name: string;
+          email: string;
+          message: string;
+          date: string;
+        }[];
+        setMessages(messagesList);
+      } catch (error) {
+        console.error("Erreur lors du chargement des messages:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMessages();
+  }, [firebaseConfigured]);
 
   // Sauvegarder les messages dans localStorage quand ils changent
   useEffect(() => {
@@ -139,20 +255,37 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     const newMessage = {
-      id: Math.random().toString(36).substr(2, 9),
-      ...formData,
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
       date: new Date().toISOString()
     };
 
-    // Mettre à jour l'état et enregistrer dans localStorage
-    setMessages(prev => [...prev, newMessage]);
-    setFormSubmitted(true);
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
+    try {
+      setLoading(true);
+      // Ajouter le message à Firestore
+      const docRef = await addDoc(collection(db, 'messages'), newMessage);
+      
+      // Mettre à jour l'état local avec l'ID généré par Firestore
+      setMessages(prev => [{
+        ...newMessage,
+        id: docRef.id
+      }, ...prev]);
+      
+      setFormSubmitted(true);
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du message:", error);
+      alert("Une erreur est survenue lors de l'envoi du message. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -163,9 +296,19 @@ function App() {
     }));
   };
 
-  const deleteMessage = (id: string) => {
-    setMessages(prev => prev.filter(message => message.id !== id));
-    // localStorage sera mis à jour automatiquement grâce à l'effet
+  const deleteMessage = async (id: string) => {
+    try {
+      setLoading(true);
+      // Supprimer le message de Firestore
+      await deleteDoc(doc(db, 'messages', id));
+      // Mettre à jour l'état local
+      setMessages(prev => prev.filter(message => message.id !== id));
+    } catch (error) {
+      console.error("Erreur lors de la suppression du message:", error);
+      alert("Une erreur est survenue lors de la suppression du message.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -192,13 +335,26 @@ function App() {
               <div className="flex items-center gap-3">
                 {messages.length > 0 && (
                   <button
-                    onClick={() => {
+                    onClick={async () => {
                       if (window.confirm('Êtes-vous sûr de vouloir supprimer tous les messages?')) {
-                        setMessages([]);
-                        localStorage.removeItem('contactMessages');
+                        try {
+                          setLoading(true);
+                          // Supprimer tous les messages un par un
+                          const deletePromises = messages.map(message => 
+                            deleteDoc(doc(db, 'messages', message.id))
+                          );
+                          await Promise.all(deletePromises);
+                          setMessages([]);
+                        } catch (error) {
+                          console.error("Erreur lors de la suppression des messages:", error);
+                          alert("Une erreur est survenue lors de la suppression des messages.");
+                        } finally {
+                          setLoading(false);
+                        }
                       }
                     }}
                     className="px-3 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                    disabled={loading}
                   >
                     <Trash2 className="w-4 h-4 inline mr-1" /> Tout supprimer
                   </button>
@@ -213,7 +369,14 @@ function App() {
             </div>
 
             <div className="space-y-4">
-              {messages.length === 0 ? (
+              {loading && (
+                <div className="text-center py-8">
+                  <div className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="mt-2 text-gray-600 dark:text-gray-300">Chargement...</p>
+                </div>
+              )}
+              
+              {!loading && messages.length === 0 ? (
                 <div className={`p-8 rounded-lg text-center ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
                   <MessageSquare className="w-12 h-12 mx-auto mb-4 text-gray-400" />
                   <p className="text-lg">Aucun message pour le moment</p>
@@ -237,6 +400,7 @@ function App() {
                         <button
                           onClick={() => deleteMessage(message.id)}
                           className="p-2 text-red-500 hover:bg-red-100 rounded-full transition-all"
+                          disabled={loading}
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
@@ -251,6 +415,11 @@ function App() {
         </div>
       </div>
     );
+  }
+
+  // Afficher le composant de configuration si Firebase n'est pas configuré
+  if (showConfig) {
+    return <ConfigSetup onComplete={handleSaveConfig} />;
   }
 
   return (
