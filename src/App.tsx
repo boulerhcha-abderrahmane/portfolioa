@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, FileText, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook } from 'lucide-react';
+import { Github, Linkedin, Moon, Sun, Send, CheckCircle, ArrowLeft, MessageSquare, Clock, Trash2, Instagram, Facebook } from 'lucide-react';
 import messagesData from './messages.json';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    return savedMode ? JSON.parse(savedMode) : false;
+  });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [messages, setMessages] = useState<{
@@ -58,6 +61,16 @@ function App() {
       return () => clearInterval(interval);
     }
   }, [showAdmin]);
+
+  // Update localStorage and apply dark mode to document when darkMode changes
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   const skills = [
     { name: 'HTML', level: 95, color: '#E34F26' },
